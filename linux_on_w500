@@ -4,13 +4,23 @@ the hardware description page is:
 http://www-307.ibm.com/pc/support/site.wss/quickPath.do?quickPathEntry=4061A75
 
 
-After having my usual rant against debian, and wishing i could only had gentoo on this machine, i decided to make 3 partitions out of the 320gig HD.. unfortunately spinning at 5400rpm (the only flaw i can see on the configuration).
+After having my usual rant against debian, and wishing i could only had gentoo on this machine, 
+i decided to make 3 partitions out of the 320gig HD.. unfortunately spinning at 5400rpm (the only flaw i can see on the configuration).
 
 
 KERNEL:
 
 
 VIDEO CARD ISSUE:
+
+"The ThinkPad W500 is designed to provide users with best-class graphics performance achieved by AMD's Mobility FireGL V5700 graphics chip. 
+The fundamental design of ThinkPad W500's graphics was based on AMD's Mobility Radeon HD3650 graphics chip. Extended graphics logic 
+and functionality were added to activate the FireGL graphics features. Due to a limitation, the operating system is not capable of differentiating 
+between the AMD Mobility Radeon HD3650 and the FireGL V5700 graphics chips, therefore it reports the Mobility Radeon HD3650 in Device Manager 
+or Display Properties dialogs. The graphics chip of this model is the Mobility FireGL V5700, which gives users the benefit of FireGL functions and performance."
+
+
+http://www-307.ibm.com/pc/support/site.wss/document.do?sitestyle=lenovo&lndocid=MIGR-70497
 
 
 The video card is listed as:
@@ -28,7 +38,38 @@ The video card is listed as:
         Capabilities: <access denied>
 
 
+This is what hardware info tells:
 
+
+20: PCI 100.0: 0300 VGA compatible controller (VGA)
+  [Created at pci.314]
+  Unique ID: VCu0.WqkckFk7SSA
+  Parent ID: vSkL.KcfarPM+5y9
+  SysFS ID: /devices/pci0000:00/0000:00:01.0/0000:01:00.0
+  SysFS BusID: 0000:01:00.0
+  Hardware Class: graphics card
+  Model: "ATI Mobilitiy Radeon HD 3650"
+  Vendor: pci 0x1002 "ATI Technologies Inc"
+  Device: pci 0x9591 "Mobilitiy Radeon HD 3650"
+  SubVendor: pci 0x17aa "Lenovo"
+  SubDevice: pci 0x2117 
+  Memory Range: 0xd0000000-0xdfffffff (rw,prefetchable)
+  I/O Ports: 0x2000-0x2fff (rw)
+  Memory Range: 0xcfff0000-0xcfffffff (rw,non-prefetchable)
+  Memory Range: 0xcff00000-0xcff1ffff (ro,prefetchable,disabled)
+  IRQ: 11 (no events)
+  I/O Ports: 0x3c0-0x3df (rw)
+  Module Alias: "pci:v00001002d00009591sv000017AAsd00002117bc03sc00i00"
+  Config Status: cfg=new, avail=yes, need=no, active=unknown
+  Attached to: #42 (PCI bridge)
+
+
+THE FIX(?):
+
+1.First update video card drivers:
+http://www-307.ibm.com/pc/support/site.wss/document.do?lndocid=MIGR-70366
+2.Update Bios:
+http://www-307.ibm.com/pc/support/site.wss/MIGR-70353.html#changes
 
 
 
