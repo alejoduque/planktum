@@ -1,4 +1,42 @@
 notes on getting linux running on a thinkpad w500
 
+the hardware description page is:
+http://www-307.ibm.com/pc/support/site.wss/quickPath.do?quickPathEntry=4061A75
 
+
+After having my usual rant against debian, and wishing i could only had gentoo on this machine, i decided to make 3 partitions out of the 320gig HD.. unfortunately spinning at 5400rpm (the only flaw i can see on the configuration).
+
+
+KERNEL:
+
+
+VIDEO CARD ISSUE:
+
+
+The video card is listed as:
+
+01:00.0 VGA compatible controller: ATI Technologies Inc Mobility Radeon HD 3650 (prog-if 00 [VGA controller])
+        Subsystem: Lenovo Device 2117
+        Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR+ FastB2B- DisINTx-
+        Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+        Latency: 0, Cache Line Size: 64 bytes
+        Interrupt: pin A routed to IRQ 11
+        Region 0: Memory at d0000000 (32-bit, prefetchable) [size=256M]
+        Region 1: I/O ports at 2000 [size=256]
+        Region 2: Memory at cfff0000 (32-bit, non-prefetchable) [size=64K]
+        [virtual] Expansion ROM at cff00000 [disabled] [size=128K]
+        Capabilities: <access denied>
+
+
+
+
+
+
+http://forum.lenovo.com/lnv/board/message?board.id=W_ThinkPads&view=by_date_ascending&message.id=1356#M1356
+
+VIDEO ACCELERATION:
+
+
+WIRELESS:
 http://tinyshell.be/aircrackng/forum/index.php?PHPSESSID=ef23dd82a66a8bc71396a56385eaf0cb&topic=4217.msg25714
+
