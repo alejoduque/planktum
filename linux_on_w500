@@ -125,6 +125,47 @@ http://www-307.ibm.com/pc/support/site.wss/MIGR-70353.html#changes
 
 
 
+After updating the BIOS to 1.20 nothing of the above changed.
+
+But after installing the fglrx driver from ATI i can see this:
+
+(II) Primary Device is: PCI 01:00:0
+(II) ATI Proprietary Linux Driver Version Identifier:8.54.3
+(II) ATI Proprietary Linux Driver Release Identifier: UNSUPPORTED-8.543                    
+(II) ATI Proprietary Linux Driver Build Date: Oct  8 2008 23:09:02
+(--) Chipset Supported AMD Graphics Processor (0x9591) found
+(II) AMD Video driver is running on the exact device targeted for this release
+(II) AMD Video driver is signed
+
+(--) fglrx(0): Chipset: "ATI Mobility FireGL V5700 " (Chipset = 0x9591)
+(--) fglrx(0): (PciSubVendor = 0x17aa, PciSubDevice = 0x2127)
+(--) fglrx(0): board vendor info: third party graphics adapter - NOT original ATI
+
+(WW) fglrx(0): Failed to open DRM connection
+(II) fglrx(0): [FB] Find the MC FB aperturs range(MCFBBase = 0xc0000000, MCFBSize = 0x20000000)
+(--) fglrx(0): Video RAM: 524288 kByte, Type: DDR3
+ 
+(==) fglrx(0): OpenGL ClientDriverName: "fglrx_dri.so"
+(**) fglrx(0): ATI GART size: 255 MB
+(WW) fglrx(0): No DRM connection for driver fglrx.
+(II) fglrx(0): [drm] DRM buffer queue setup: nbufs = 100 bufsize = 65536
+(==) fglrx(0): UseFastTLS=0
+(==) fglrx(0): BlockSignalsOnLock=1
+(II) fglrx(0): Direct rendering disabled
+
+
+The error if DRI is still present though:
+
+(EE) fglrx(0): atiddxDriScreenInit failed, GPS not been initialized. 
+(WW) fglrx(0): ***********************************************
+(WW) fglrx(0): * DRI initialization failed!                  *
+(WW) fglrx(0): * (maybe driver kernel module missing or bad) *
+(WW) fglrx(0): * 2D acceleraton available (MMIO)             *
+(WW) fglrx(0): * no 3D acceleration available                *
+(WW) fglrx(0): ********************************************* *
+
+
+
 http://forum.lenovo.com/lnv/board/message?board.id=W_ThinkPads&view=by_date_ascending&message.id=1356#M1356
 
 VIDEO ACCELERATION:
