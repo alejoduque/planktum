@@ -64,6 +64,58 @@ This is what hardware info tells:
   Attached to: #42 (PCI bridge)
 
 
+DRIVER:
+Im using FGLRX, at first this is what my X.org.log in /var/log tells:
+
+
+(II) Setting vga for screen 0.
+(II) fglrx(0): === [atiddxPreInit] === begin
+(II) Loading sub module "vgahw"
+(II) LoadModule: "vgahw"
+(II) Loading /usr/lib/xorg/modules//libvgahw.so
+(II) Module vgahw: vendor="X.Org Foundation"
+        compiled for 1.4.2, module version = 0.1.0
+        ABI class: X.Org Video Driver, version 2.0
+(II) fglrx(0): PCI bus 1 card 0 func 0
+(II) fglrx(0): Creating default Display subsection in Screen section
+        "Default Screen" for depth/fbbpp 24/32
+(**) fglrx(0): Depth 24, (--) framebuffer bpp 32
+(II) fglrx(0): Pixel depth = 24 bits stored in 4 bytes (32 bpp pixmaps)
+(==) fglrx(0): Default visual is TrueColor
+(**) fglrx(0): Option "dri"
+(II) fglrx(0): PCS database file /etc/ati/amdpcsdb not found
+(II) fglrx(0):   Creating PCS database from initial defaults instead
+(==) fglrx(0): RGB weight 888
+(II) fglrx(0): Using 8 bits per RGB (8 bit DAC)
+(==) fglrx(0): Gamma Correction for I is 0x06419064
+(==) fglrx(0): Gamma Correction for II is 0x06419064
+(==) fglrx(0): Buffer Tiling is ON
+(--) fglrx(0): Chipset: "ATI Mobility Radeon HD 3650" (Chipset = 0x9591)
+(--) fglrx(0): (PciSubVendor = 0x17aa, PciSubDevice = 0x2117)
+(--) fglrx(0): board vendor info: third party graphics adapter - NOT original ATI
+(--) fglrx(0): Linear framebuffer (phys) at 0xd0000000
+(--) fglrx(0): MMIO registers at 0xcfff0000
+(--) fglrx(0): I/O port at 0x00002000
+(==) fglrx(0): ROM-BIOS at 0x000c0000
+(II) fglrx(0): Primary V_BIOS segment is: 0xc000
+(II) Loading sub module "vbe"
+(II) LoadModule: "vbe"
+(II) Loading /usr/lib/xorg/modules//libvbe.so
+(II) Module vbe: vendor="X.Org Foundation"
+        compiled for 1.4.2, module version = 1.1.0
+        ABI class: X.Org Video Driver, version 2.0
+(II) fglrx(0): VESA BIOS detected
+(II) fglrx(0): VESA VBE Version 3.0
+(II) fglrx(0): VESA VBE Total Mem: 16384 kB
+(II) fglrx(0): VESA VBE OEM: ATI ATOMBIOS
+(II) fglrx(0): VESA VBE OEM Software Rev: 10.88
+(II) fglrx(0): VESA VBE OEM Vendor: (C) 1988-2005, ATI Technologies Inc. 
+(II) fglrx(0): VESA VBE OEM Product: FGL M86
+(II) fglrx(0): VESA VBE OEM Product Rev: 01.00
+(II) fglrx(0): ATI Video BIOS revision 9 or later detected
+
+
+
 THE FIX(?):
 
 1.First update video card drivers:
