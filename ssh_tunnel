@@ -1,0 +1,185 @@
+[Solutions] secure outside communication in insecure environments RSS feed for section Solutions
+
+There is a well-known hacker-event coming up (23C3) and the following question comes pouring in in all the usual places:
+How can I transmit sensitive data to the outside of the congress network without it being sniffed?
+
+
+The good question probably is that people seem to know already how to tunnel single ports through an openssh connection. While this will work nicely for http(s) if you tunnel a proxy server from a trusted outside machine, it is still inconvenient for other types of connections. This HowTo will show how to create a VPN-like tunnel from the client you have with you at the congress to a trusted (as in: you trust it) on the outside.
+
+First: You need root-access on both machines. Sorry, no-go without it.
+Second: You need OpenSSH at least version 4.3. I'll use version 4.3p2 for this HowTo.
+
+I'll be doing this on two GNU/Linux boxes, but it should be the same with other Unix-like systems.
+
+
+Step one
+
+Make sure you have the 'tun' kernel module loaded on both machines:
+
+root@server:~# modprobe tun
+root@client:~# modprobe tun
+
+
+You will then have a /dev/net/tun character device.
+
+Step two
+
+Make sure tunneling is allowed in the ssh daemon:
+root@server:~# grep PermitTunnel /etc/ssh/sshd_config
+PermitTunnel yes
+
+This option defaults to 'no' so if the line doesn't look like this, change it and restart your ssh daemon process.
+
+Step three
+
+Connect from the client to the server:
+root@client:~# ssh -w any:any server
+root@server's password:
+root@server:~#
+
+
+Here, any:any defines the pseudo-network device to create (tunX). any on either side means 'use the next one available' and is suggested by me.
+You will now have a new network interface called 'tunX' (X being a single digit number) on either side:
+root@server:~# ifconfig -a
+eth0 Link encap:Ethernet HWaddr XX:XX:XX:XX:XX:XX
+inet addr:XXX.XXX.XXX.XXX Bcast:XXX.XXX.XXX.XXX Mask:XXX.XXX.XXX.XXX
+UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1
+RX packets:69373884 errors:0 dropped:0 overruns:0 frame:0
+TX packets:58911226 errors:0 dropped:0 overruns:0 carrier:0
+collisions:0 txqueuelen:1000
+RX bytes:4063019177 (3874.7 Mb) TX bytes:4091883447 (3902.3 Mb)
+
+lo Link encap:Local Loopback
+inet addr:127.0.0.1 Mask:255.0.0.0
+UP LOOPBACK RUNNING MTU:16436 Metric:1
+RX packets:906689 errors:0 dropped:0 overruns:0 frame:0
+TX packets:906689 errors:0 dropped:0 overruns:0 carrier:0
+collisions:0 txqueuelen:0
+RX bytes:128765739 (122.8 Mb) TX bytes:128765739 (122.8 Mb)
+
+tun0 Link encap:UNSPEC HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+POINTOPOINT NOARP MULTICAST MTU:1500 Metric:1
+RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+collisions:0 txqueuelen:500
+RX bytes:0 (0.0 b) TX bytes:0 (0.0 b)
+
+
+root@client:~# ifconfig -a
+eth0 Link encap:Ethernet HWaddr XX:XX:XX:XX:XX:XX
+BROADCAST MULTICAST MTU:1500 Metric:1
+RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+collisions:0 txqueuelen:1000
+RX bytes:0 (0.0 b) TX bytes:0 (0.0 b)
+Interrupt:10
+
+eth1 Link encap:Ethernet HWaddr XX:XX:XX:XX:XX:XX
+inet addr:XXX.XXX.XXX.XXX Bcast:XXX.XXX.XXX.XXX Mask:XXX.XXX.XXX.XXX
+UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1
+RX packets:67521 errors:0 dropped:0 overruns:0 frame:0
+TX packets:95459 errors:0 dropped:0 overruns:0 carrier:0
+collisions:0 txqueuelen:1000
+RX bytes:74583769 (71.1 Mb) TX bytes:78718716 (75.0 Mb)
+Interrupt:10 Base address:0x6000 Memory:e0206000-e0206fff
+
+lo Link encap:Local Loopback
+inet addr:127.0.0.1 Mask:255.0.0.0
+UP LOOPBACK RUNNING MTU:16436 Metric:1
+RX packets:33962 errors:0 dropped:0 overruns:0 frame:0
+TX packets:33962 errors:0 dropped:0 overruns:0 carrier:0
+collisions:0 txqueuelen:0
+RX bytes:100964712 (96.2 Mb) TX bytes:100964712 (96.2 Mb)
+
+tun0 Link encap:UNSPEC HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+POINTOPOINT NOARP MULTICAST MTU:1500 Metric:1
+RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+collisions:0 txqueuelen:500
+RX bytes:0 (0.0 b) TX bytes:0 (0.0 b)
+
+
+Step four: Configure network access
+
+Next you have to configurethe network interfaces on both side. You must use an unused private subnet either in the 10.0.0.0/24 or 172.16.0.0/16 or 192.168.0.0/8 ranges. Here we'll use 192.168.100.0/8 as an example:
+
+root@server:~# ifconfig tun0 192.168.100.10 pointopoint 192.168.100.11 netmask 255.255.255.0 up
+root@server:~# ifconfig tun0
+tun0 Link encap:UNSPEC HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+inet addr:192.168.100.10 P-t-P:192.168.100.11 Mask:255.255.255.0
+UP POINTOPOINT RUNNING NOARP MULTICAST MTU:1500 Metric:1
+RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+collisions:0 txqueuelen:500
+RX bytes:0 (0.0 b) TX bytes:0 (0.0 b)
+
+root@client:~# ifconfig tun0 192.168.100.11 pointopoint 192.168.100.10 netmask 255.255.255.0
+root@client:~# ifconfig tun0
+tun0 Link encap:UNSPEC HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+inet addr:192.168.100.11 P-t-P:192.168.100.10 Mask:255.255.255.0
+UP POINTOPOINT RUNNING NOARP MULTICAST MTU:1500 Metric:1
+RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+collisions:0 txqueuelen:500
+RX bytes:0 (0.0 b) TX bytes:0 (0.0 b)
+
+root@client:~# ping -c4 192.168.100.10
+PING 192.168.100.10 (192.168.100.10): 56 octets data
+64 octets from 192.168.100.10: icmp_seq=0 ttl=64 time=2.7 ms
+64 octets from 192.168.100.10: icmp_seq=1 ttl=64 time=2.3 ms
+64 octets from 192.168.100.10: icmp_seq=2 ttl=64 time=2.5 ms
+64 octets from 192.168.100.10: icmp_seq=3 ttl=64 time=2.3 ms
+
+--- 192.168.100.10 ping statistics ---
+4 packets transmitted, 4 packets received, 0% packet loss
+round-trip min/avg/max = 2.3/2.4/2.7 ms
+
+
+Now we have a working point to point connection through openssh. That helps if we only want to connect to that other host, but we want to connect to the rest of the world. So here's what we do next.
+
+Step five: Configure masquerading
+
+For a GNU/Linux system, here is a little shell script that I don't remember the source of.
+Open it with a text-editor, change the first few lines according to your setup, run it and see it killing all your existing iptables rules and sets up masquerading for your outside connection and your tunnel connection.
+
+One last thing remains to do on the client:
+root@client:~# route del -net default
+root@client:~# route add -net default gw 192.168.100.11
+
+
+Now, each and every outside connection you open will be tunneled through the ssh connection to the server, where it will be masqueraded to the Internet with the public IP address of that machine.
+
+Have fun communicating securely from the 23C3 and call me on my DECT if you wish to invite me to a coffee or Jolt Cola (no Mate, please): 2307
+
+
+EOF
+
+Back home  clock 16:02:07 21.12.2006 | Permalink | Trackback URI
+Esden (2006-12-24 00:13:13)
+
+Why not use openvpn???
+
+I have a openvpn server running on repl if you whish to have a certificate let me know blindy ;)
+blindcoder (2006-12-24 10:44:57)
+
+Because OpenVPN is so much more complex to use. The mere mentioning of a certificate tells me that there is probably a big administration/setup involved.
+SSH is on each and every system these days and has the functionality built in. Also, the SSH protocol is currently deemed 'secure' (for varying definitions of the word) while I do not know what king of encryption OpenVPN uses.
+
+EOF
+Pieter (2006-12-28 09:06:23)
+
+Thanks,
+For you're openssh tunnel howto.
+
+Looking at [1] shows that openvpn with static key is as simple...
+
+[1] http://deb.riseup.net/networking/openvpn/
+Criggie (2007-05-16 02:18:21)
+
+Gidday - you have a small mistake with netmasks in Step 4
+
+"You must use an unused private subnet either in the 10.0.0.0/24 or 172.16.0.0/16 or 192.168.0.0/8 ranges. Here we'll use 192.168.100.0/8 as an example"
+
+Should be 10.0.0.0/8 or 172.16.0.0/12 or 192.168.x.0/24 where x is 0-254.
+
+Sorry.
