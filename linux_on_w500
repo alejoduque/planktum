@@ -183,10 +183,12 @@ To have xterm in a different color than white one needs to add this:
  XTerm*background:   black
  XTerm*foreground:   yellow
  XTerm*highlightColor:  green
+ XTerm*geometry: 120x30+100+100
 
 on:
  ~/.Xdefaults
 
-and to load run:
+and to load run (inside .ixinitrc or .Xsession):
  xrdb ~/.Xdefaults
+
 -----
