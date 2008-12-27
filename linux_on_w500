@@ -174,3 +174,19 @@ VIDEO ACCELERATION:
 WIRELESS:
 http://tinyshell.be/aircrackng/forum/index.php?PHPSESSID=ef23dd82a66a8bc71396a56385eaf0cb&topic=4217.msg25714
 
+----
+
+Xwindows
+
+To have xterm in a different color than white one needs to add this:
+
+ XTerm*background:   black
+ XTerm*foreground:   yellow
+ XTerm*highlightColor:  green
+
+on:
+ ~/.Xdefaults
+
+and to load run:
+ xrdb ~/.Xdefaults
+-----
