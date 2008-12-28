@@ -34,3 +34,5 @@ AUDIO: 44100 Hz, 1 ch, s16le, 48.0 kbit/6.81% (ratio: 6003->88200)
 
 +calibrar el audio de los 2 rooms, es decir, si cambio de un stream al otro el nivel del audio debera ser similar. (in an ideal world)
 +if audio is bad from the presenter, we should have a nice and politte way to come and fix things with the presenter
++what happens if there are technical problems not related to the stream, should we leave on all the troubleshooting? we 
+bring down the audio? we stop the stream? i guess second option and an message.
