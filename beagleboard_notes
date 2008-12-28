@@ -1,0 +1,16 @@
+ * Make an SD Card with the Angstrom Demo files.  See the Beagleboard Wiki Page for more info on making the SD Card.
+ * Put the SD Card in the Beagle, and boot up to the U-Boot Prompt.
+ * Do the first six instructions in the Flashing Commands with U-Boot section.  
+ * Reboot the Beagle to see that the new X-Loader is properly loaded.
+
+urls:
+
+http://elinux.org/BeagleBoardAndOpenEmbeddedGit
+
+http://www.angstrom-distribution.org/demo/beagleboard/
+
+http://code.google.com/p/beagleboard/wiki/LinuxBootDiskFormat
+
+http://code.google.com/p/beagleboard/wiki/BeagleNANDFlashing
+
+
