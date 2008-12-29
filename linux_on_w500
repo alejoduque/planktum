@@ -191,4 +191,16 @@ on:
 and to load run (inside .ixinitrc or .Xsession):
  xrdb ~/.Xdefaults
 
+About Awesome:
+
+to get Awesome configured i needed to touch this file:
+/etc/xdg/awesome/rc.lua
+
+not the one people in the IRC suggested, ~/.config/awesome/rc.lua
+
+im running awesome 3.1 stable since the code i got from git was not stable, i believe soon there will be a version 3.2
+
+my basic rc.lua is in the configs dir
+
 -----
+
