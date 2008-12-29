@@ -36,3 +36,8 @@ AUDIO: 44100 Hz, 1 ch, s16le, 48.0 kbit/6.81% (ratio: 6003->88200)
 +if audio is bad from the presenter, we should have a nice and politte way to come and fix things with the presenter
 +what happens if there are technical problems not related to the stream, should we leave on all the troubleshooting? we 
 bring down the audio? we stop the stream? i guess second option and an message.
+
++a list both printed and digital of the topics of each session including name of projects/presenters to put in the 
+topic of the IRC channel.
+
+
