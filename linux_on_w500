@@ -204,3 +204,22 @@ my basic rc.lua is in the configs dir
 
 -----
 
+for using the integrated video camera on the w500.
+
+ $xawtv -hwscan
+This is xawtv-3.95.dfsg.1, running on Linux/i686 (2.6.28-ad)
+looking for available devices
+/dev/video0: OK                         [ -device /dev/video0 ]
+    type : v4l2
+    name : UVC Camera (17ef:4807)
+    flags:  capture  
+
+
+one just needs to install this software:
+
+ guvcview
+
+
+the other program didnt worked well for me:
+
+ luvcview
