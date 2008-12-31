@@ -1,3 +1,4 @@
+
 para clonar:
 git pull github master
 
@@ -12,3 +13,4 @@ git commit -m "w500_notes"
 ---
 
 added rsa from user, this is a test
+it works from kdag on the w500
