@@ -30,8 +30,6 @@ AUDIO: 44100 Hz, 1 ch, s16le, 48.0 kbit/6.81% (ratio: 6003->88200)
 ||||||||||||||||according to mplayer||||||||||||||||||||||||||||||
 
 
-
-
 +calibrar el audio de los 2 rooms, es decir, si cambio de un stream al otro el nivel del audio debera ser similar. (in an ideal world)
 +if audio is bad from the presenter, we should have a nice and politte way to come and fix things with the presenter
 +what happens if there are technical problems not related to the stream, should we leave on all the troubleshooting? we 
@@ -39,5 +37,18 @@ bring down the audio? we stop the stream? i guess second option and an message.
 
 +a list both printed and digital of the topics of each session including name of projects/presenters to put in the 
 topic of the IRC channel.
+
+
+::::::::::::::::::::::::::::
+
+
+will be wise to have a similar table that can tell the IRC moderator the time,topic,speaker so to be able to announce things properly to the people on the chat. If we keep the topic of the channel updated with this 
+info people who wants to follow the stream will be ready and on-time for them, we will also save a lot of time pasting to the channel the same info everytime someone jumps into the chat and asks:
+
+whos talking
+whos next
+at what time are the streams beginning
+
+///////////////////////////
 
 
