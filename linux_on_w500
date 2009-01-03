@@ -247,3 +247,14 @@ CONFIG_MMC_RICOH_MMC=m
 CONFIG_MMC_SDRICOH_CS=m
 
 
+------
+
+to avoid making all the modules again on a kernel on e can try this:
+(taken from andrea guzzo)
+
+  - make SUBDIRS=drivers/ieee1394 modules
+  - cp drivers/ieee1394/*.ko in /lib/modules/2.6.x/kernel/drivers/ieee1394/
+   
+-------
+
+
