@@ -265,3 +265,4 @@ export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/qt/3/lib64/pkgconfig
 _______
 
 
+test
