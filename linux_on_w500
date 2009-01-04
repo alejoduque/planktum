@@ -258,3 +258,10 @@ to avoid making all the modules again on a kernel on e can try this:
 -------
 
 
+for adding something to the env:
+
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/qt/3/lib64/pkgconfig
+
+_______
+
+
