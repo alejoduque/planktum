@@ -1,0 +1,10 @@
+mirage -- installed, works OK, can delete the original image from the SD, but can only open all the images, not a selection of images
+
+gpicview -- installed, similar to above, it doesnt open all the images but can magically jump from one to the next one. no editing options
+
+flphoto -- installed, works almost as i wanted, can get the images directly from the camera but can't remove the files directly from it. it has touch editing for cropping, sharpness and 
+contrast. can save in png and jpeg.
+
+pqiv -- nothing to say, --unmerged
+
+xv -- cool interface but crashing, --unmerged
