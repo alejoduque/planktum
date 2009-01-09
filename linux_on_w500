@@ -1,0 +1,268 @@
+notes on getting linux running on a thinkpad w500
+
+the hardware description page is:
+http://www-307.ibm.com/pc/support/site.wss/quickPath.do?quickPathEntry=4061A75
+
+
+After having my usual rant against debian, and wishing i could only had gentoo on this machine, 
+i decided to make 3 partitions out of the 320gig HD.. unfortunately spinning at 5400rpm (the only flaw i can see on the configuration).
+
+
+KERNEL:
+
+
+VIDEO CARD ISSUE:
+
+"The ThinkPad W500 is designed to provide users with best-class graphics performance achieved by AMD's Mobility FireGL V5700 graphics chip. 
+The fundamental design of ThinkPad W500's graphics was based on AMD's Mobility Radeon HD3650 graphics chip. Extended graphics logic 
+and functionality were added to activate the FireGL graphics features. Due to a limitation, the operating system is not capable of differentiating 
+between the AMD Mobility Radeon HD3650 and the FireGL V5700 graphics chips, therefore it reports the Mobility Radeon HD3650 in Device Manager 
+or Display Properties dialogs. The graphics chip of this model is the Mobility FireGL V5700, which gives users the benefit of FireGL functions and performance."
+
+
+http://www-307.ibm.com/pc/support/site.wss/document.do?sitestyle=lenovo&lndocid=MIGR-70497
+
+
+The video card is listed as:
+
+01:00.0 VGA compatible controller: ATI Technologies Inc Mobility Radeon HD 3650 (prog-if 00 [VGA controller])
+        Subsystem: Lenovo Device 2117
+        Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR+ FastB2B- DisINTx-
+        Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+        Latency: 0, Cache Line Size: 64 bytes
+        Interrupt: pin A routed to IRQ 11
+        Region 0: Memory at d0000000 (32-bit, prefetchable) [size=256M]
+        Region 1: I/O ports at 2000 [size=256]
+        Region 2: Memory at cfff0000 (32-bit, non-prefetchable) [size=64K]
+        [virtual] Expansion ROM at cff00000 [disabled] [size=128K]
+        Capabilities: <access denied>
+
+
+This is what hardware info tells:
+
+
+20: PCI 100.0: 0300 VGA compatible controller (VGA)
+  [Created at pci.314]
+  Unique ID: VCu0.WqkckFk7SSA
+  Parent ID: vSkL.KcfarPM+5y9
+  SysFS ID: /devices/pci0000:00/0000:00:01.0/0000:01:00.0
+  SysFS BusID: 0000:01:00.0
+  Hardware Class: graphics card
+  Model: "ATI Mobilitiy Radeon HD 3650"
+  Vendor: pci 0x1002 "ATI Technologies Inc"
+  Device: pci 0x9591 "Mobilitiy Radeon HD 3650"
+  SubVendor: pci 0x17aa "Lenovo"
+  SubDevice: pci 0x2117 
+  Memory Range: 0xd0000000-0xdfffffff (rw,prefetchable)
+  I/O Ports: 0x2000-0x2fff (rw)
+  Memory Range: 0xcfff0000-0xcfffffff (rw,non-prefetchable)
+  Memory Range: 0xcff00000-0xcff1ffff (ro,prefetchable,disabled)
+  IRQ: 11 (no events)
+  I/O Ports: 0x3c0-0x3df (rw)
+  Module Alias: "pci:v00001002d00009591sv000017AAsd00002117bc03sc00i00"
+  Config Status: cfg=new, avail=yes, need=no, active=unknown
+  Attached to: #42 (PCI bridge)
+
+
+DRIVER:
+Im using FGLRX, at first this is what my X.org.log in /var/log tells:
+
+
+(II) Setting vga for screen 0.
+(II) fglrx(0): === [atiddxPreInit] === begin
+(II) Loading sub module "vgahw"
+(II) LoadModule: "vgahw"
+(II) Loading /usr/lib/xorg/modules//libvgahw.so
+(II) Module vgahw: vendor="X.Org Foundation"
+        compiled for 1.4.2, module version = 0.1.0
+        ABI class: X.Org Video Driver, version 2.0
+(II) fglrx(0): PCI bus 1 card 0 func 0
+(II) fglrx(0): Creating default Display subsection in Screen section
+        "Default Screen" for depth/fbbpp 24/32
+(**) fglrx(0): Depth 24, (--) framebuffer bpp 32
+(II) fglrx(0): Pixel depth = 24 bits stored in 4 bytes (32 bpp pixmaps)
+(==) fglrx(0): Default visual is TrueColor
+(**) fglrx(0): Option "dri"
+(II) fglrx(0): PCS database file /etc/ati/amdpcsdb not found
+(II) fglrx(0):   Creating PCS database from initial defaults instead
+(==) fglrx(0): RGB weight 888
+(II) fglrx(0): Using 8 bits per RGB (8 bit DAC)
+(==) fglrx(0): Gamma Correction for I is 0x06419064
+(==) fglrx(0): Gamma Correction for II is 0x06419064
+(==) fglrx(0): Buffer Tiling is ON
+(--) fglrx(0): Chipset: "ATI Mobility Radeon HD 3650" (Chipset = 0x9591)
+(--) fglrx(0): (PciSubVendor = 0x17aa, PciSubDevice = 0x2117)
+(--) fglrx(0): board vendor info: third party graphics adapter - NOT original ATI
+(--) fglrx(0): Linear framebuffer (phys) at 0xd0000000
+(--) fglrx(0): MMIO registers at 0xcfff0000
+(--) fglrx(0): I/O port at 0x00002000
+(==) fglrx(0): ROM-BIOS at 0x000c0000
+(II) fglrx(0): Primary V_BIOS segment is: 0xc000
+(II) Loading sub module "vbe"
+(II) LoadModule: "vbe"
+(II) Loading /usr/lib/xorg/modules//libvbe.so
+(II) Module vbe: vendor="X.Org Foundation"
+        compiled for 1.4.2, module version = 1.1.0
+        ABI class: X.Org Video Driver, version 2.0
+(II) fglrx(0): VESA BIOS detected
+(II) fglrx(0): VESA VBE Version 3.0
+(II) fglrx(0): VESA VBE Total Mem: 16384 kB
+(II) fglrx(0): VESA VBE OEM: ATI ATOMBIOS
+(II) fglrx(0): VESA VBE OEM Software Rev: 10.88
+(II) fglrx(0): VESA VBE OEM Vendor: (C) 1988-2005, ATI Technologies Inc. 
+(II) fglrx(0): VESA VBE OEM Product: FGL M86
+(II) fglrx(0): VESA VBE OEM Product Rev: 01.00
+(II) fglrx(0): ATI Video BIOS revision 9 or later detected
+
+
+
+THE FIX(?):
+
+1.First update video card drivers:
+http://www-307.ibm.com/pc/support/site.wss/document.do?lndocid=MIGR-70366
+2.Update Bios:
+http://www-307.ibm.com/pc/support/site.wss/MIGR-70353.html#changes
+
+
+
+After updating the BIOS to 1.20 nothing of the above changed.
+
+But after installing the fglrx driver from ATI i can see this:
+
+(II) Primary Device is: PCI 01:00:0
+(II) ATI Proprietary Linux Driver Version Identifier:8.54.3
+(II) ATI Proprietary Linux Driver Release Identifier: UNSUPPORTED-8.543                    
+(II) ATI Proprietary Linux Driver Build Date: Oct  8 2008 23:09:02
+(--) Chipset Supported AMD Graphics Processor (0x9591) found
+(II) AMD Video driver is running on the exact device targeted for this release
+(II) AMD Video driver is signed
+
+(--) fglrx(0): Chipset: "ATI Mobility FireGL V5700 " (Chipset = 0x9591)
+(--) fglrx(0): (PciSubVendor = 0x17aa, PciSubDevice = 0x2127)
+(--) fglrx(0): board vendor info: third party graphics adapter - NOT original ATI
+
+(WW) fglrx(0): Failed to open DRM connection
+(II) fglrx(0): [FB] Find the MC FB aperturs range(MCFBBase = 0xc0000000, MCFBSize = 0x20000000)
+(--) fglrx(0): Video RAM: 524288 kByte, Type: DDR3
+ 
+(==) fglrx(0): OpenGL ClientDriverName: "fglrx_dri.so"
+(**) fglrx(0): ATI GART size: 255 MB
+(WW) fglrx(0): No DRM connection for driver fglrx.
+(II) fglrx(0): [drm] DRM buffer queue setup: nbufs = 100 bufsize = 65536
+(==) fglrx(0): UseFastTLS=0
+(==) fglrx(0): BlockSignalsOnLock=1
+(II) fglrx(0): Direct rendering disabled
+
+
+The error if DRI is still present though:
+
+(EE) fglrx(0): atiddxDriScreenInit failed, GPS not been initialized. 
+(WW) fglrx(0): ***********************************************
+(WW) fglrx(0): * DRI initialization failed!                  *
+(WW) fglrx(0): * (maybe driver kernel module missing or bad) *
+(WW) fglrx(0): * 2D acceleraton available (MMIO)             *
+(WW) fglrx(0): * no 3D acceleration available                *
+(WW) fglrx(0): ********************************************* *
+
+
+
+http://forum.lenovo.com/lnv/board/message?board.id=W_ThinkPads&view=by_date_ascending&message.id=1356#M1356
+
+VIDEO ACCELERATION:
+
+
+WIRELESS:
+http://tinyshell.be/aircrackng/forum/index.php?PHPSESSID=ef23dd82a66a8bc71396a56385eaf0cb&topic=4217.msg25714
+
+----
+
+Xwindows
+
+To have xterm in a different color than white one needs to add this:
+
+ XTerm*background:   black
+ XTerm*foreground:   yellow
+ XTerm*highlightColor:  green
+ XTerm*geometry: 120x30+100+100
+
+on:
+ ~/.Xdefaults
+
+and to load run (inside .ixinitrc or .Xsession):
+ xrdb ~/.Xdefaults
+
+About Awesome:
+
+to get Awesome configured i needed to touch this file:
+/etc/xdg/awesome/rc.lua
+
+not the one people in the IRC suggested, ~/.config/awesome/rc.lua
+
+im running awesome 3.1 stable since the code i got from git was not stable, i believe soon there will be a version 3.2
+
+my basic rc.lua is in the configs dir
+
+-----
+
+for using the integrated video camera on the w500.
+
+ $xawtv -hwscan
+This is xawtv-3.95.dfsg.1, running on Linux/i686 (2.6.28-ad)
+looking for available devices
+/dev/video0: OK                         [ -device /dev/video0 ]
+    type : v4l2
+    name : UVC Camera (17ef:4807)
+    flags:  capture  
+
+
+one just needs to install this software:
+
+ guvcview
+
+
+the other program didnt worked well for me:
+
+ luvcview
+
+
+---------
+
+about the memory card reader this are the modules one should keep and eye open for:
+
+[~]$ cat /usr/src/linux/.config | egrep -i "mmc|sdio"
+CONFIG_MMC=m
+# CONFIG_MMC_DEBUG is not set
+# CONFIG_MMC_UNSAFE_RESUME is not set
+# MMC/SD/SDIO Card Drivers
+CONFIG_MMC_BLOCK=m
+CONFIG_MMC_BLOCK_BOUNCE=y
+CONFIG_SDIO_UART=m
+# CONFIG_MMC_TEST is not set
+# MMC/SD/SDIO Host Controller Drivers
+CONFIG_MMC_SDHCI=m
+CONFIG_MMC_SDHCI_PCI=m
+CONFIG_MMC_RICOH_MMC=m
+# CONFIG_MMC_WBSD is not set
+# CONFIG_MMC_TIFM_SD is not set
+CONFIG_MMC_SDRICOH_CS=m
+
+
+------
+
+to avoid making all the modules again on a kernel on e can try this:
+(taken from andrea guzzo)
+
+  - make SUBDIRS=drivers/ieee1394 modules
+  - cp drivers/ieee1394/*.ko in /lib/modules/2.6.x/kernel/drivers/ieee1394/
+   
+-------
+
+
+for adding something to the env:
+
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/qt/3/lib64/pkgconfig
+
+_______
+
+
+test

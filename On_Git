@@ -1,0 +1,16 @@
+
+para clonar:
+git pull github master
+
+para iniciar (subir):
+git push github master
+
+despues de alguna modificacion:
+git add .
+git commit -m "w500_notes"
+
+
+---
+
+added rsa from user, this is a test
+it works from kdag on the w500

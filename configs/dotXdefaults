@@ -1,0 +1,5 @@
+XTerm*background:   black
+XTerm*foreground:   yellow
+XTerm*highlightColor:  darkred
+XTerm*geometry: 140x40+100+100
+
