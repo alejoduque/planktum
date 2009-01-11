@@ -9,6 +9,10 @@ despues de alguna modificacion:
 git add .
 git commit -m "w500_notes"
 
+git rm xxx borra en local y remoto
+(despues de hace el git add . git commit git push)
+
+
 
 ---
 
