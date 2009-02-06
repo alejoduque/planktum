@@ -14,12 +14,12 @@ sleep 0.25;
 modprobe -r sbp2
 sleep 0.25;
 
-modprobe -r ieee1394
+modprobe -r ieee1394 
 sleep 0.25;
 
 #load modules related to the firewire port
 
-modprobe ieee1394
+modprobe ieee1394 disable_irm=1
 sleep 0.25;
 
 modprobe sbp2
